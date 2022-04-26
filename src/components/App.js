@@ -10,17 +10,27 @@ const getData = async () =>{
 const Loader = () => <div id="loader">Loading...</div>
 const App = () => {
   const [todos,setTodos] = useState([])
+  const [loading,setloading] = useState(true)
+
 
   useEffect(()=>{
     getData().then(data=> {
       setTodos(data)
-     })
-  },[])
+      setloading(false);
+
+     },[])
+
+  },[todos])
   return (
     <div id="main">
       {
         loading ? <Loader /> :
-      todos.map(todo=> <div id={`todo-${todo.id}`}>{todo.title}</div>)
+        todos.map((todo)=>{
+          return(
+            <div id={`todo-${todo.id}`}>{todo.title}</div>
+          )
+        }
+        )
       }
     </div>
   )
